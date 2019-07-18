@@ -1,10 +1,10 @@
-
+import { createStore } from 'redux';
 
 const reducer = (state = 0, action) => {
 
 	switch (action.type) {
 		case 'INC':
-			return state + 1;
+			return ++state;
 			
 		default:
 			return state
@@ -12,11 +12,14 @@ const reducer = (state = 0, action) => {
 
 }
 
-let state = reducer(undefined, {} )
-console.log(state);
+const store = createStore(reducer); // по сути обертка вокруг функции reducer
+store.subscribe( () => {
+	// вывести текущее состояние state
+	console.log( store.getState() )
+} )
 
-state = reducer(state, { type: 'INC' } )
-console.log(state);
 
-state = reducer(state, { type: 'INC' } )
-console.log(state);
+// передаем Action
+store.dispatch( {type: 'INC'} )
+store.dispatch( {type: 'INC'} )
+store.dispatch( {type: 'INC'} )
