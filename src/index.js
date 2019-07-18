@@ -8,6 +8,9 @@ const reducer = (state = 0, action) => {
 
 		case 'DEC':
 			return state - 1;
+
+		case 'RND':
+			return state + action.value;
 			
 		default:
 			return state
@@ -15,17 +18,7 @@ const reducer = (state = 0, action) => {
 
 }
 
-const store = createStore(reducer); // по сути обертка вокруг функции reducer
-// store.subscribe( () => {
-// 	// вывести текущее состояние state
-// 	console.log( store.getState() )
-// } )
-
-
-// // передаем Action
-// store.dispatch( {type: 'INC'} )
-// store.dispatch( {type: 'INC'} )
-// store.dispatch( {type: 'INC'} )
+const store = createStore(reducer);
 
 document
 	.getElementById('inc')
@@ -38,6 +31,19 @@ document
 	.addEventListener('click', () => {
 		store.dispatch( {type: 'DEC'} )
 	})
+
+document
+	.getElementById('rnd')
+	.addEventListener('click', () => {
+
+		const value = Math.floor(Math.random() * 10 + 1);
+		console.log(value);
+		store.dispatch( {
+			type: 'RND',
+			value
+		} )
+	})
+
 
 function updateCounter() {
 	document
